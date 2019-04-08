@@ -1,0 +1,6 @@
+---
+neovim_release: v0.3.4
+neovim_version: 0.3.4
+_neovim_root: "{{ dependency_directory }}/neovim/{{ neovim_version }}"
+neovim_source_root: "{{ _neovim_root }}/source"
+neovim_install_root: "{{ _neovim_root }}/install"

@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  roles:
+  - install-chrome
+  - install-docker
+  - install-etckeeper
+  - install-git
+  - install-go
+  - install-inotify
+  - install-lua
+  - install-neovim
+  - install-python
+  - install-ruby
+  - install-rust
+  - install-slack
+  - install-user-tools
+  - install-vim
+  - install-vpnc
+  - install-zoom
+  - install-zsh
+  # This takes 30 minutes even after it has already completed successfully. Need
+  # to get this to finish quickly before reintroducing it.
+  # - install-gcc

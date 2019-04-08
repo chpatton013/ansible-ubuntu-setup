@@ -1,0 +1,7 @@
+---
+gcc_version: 8.3.0
+gcc_release: gcc-8_3_0-release
+_gcc_root: "{{ dependency_directory }}/gcc{{ gcc_version }}"
+gcc_source_root: "{{ _gcc_root }}/source"
+gcc_build_root: "{{ _gcc_root }}/build"
+gcc_install_root: "{{ _gcc_root }}/install"

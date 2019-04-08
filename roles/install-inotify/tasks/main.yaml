@@ -1,0 +1,14 @@
+---
+- name: Install system inotify package
+  apt:
+    name: inotify-tools
+    state: present
+  become: yes
+- name: Increase inotfy max watch count
+  template:
+    src: 99-max-user-watches.conf
+    dest: /etc/sysctl.d/99-max-user-watches.conf
+  become: yes
+- name: Reload sysctl
+  command: sysctl --load --system
+  become: yes

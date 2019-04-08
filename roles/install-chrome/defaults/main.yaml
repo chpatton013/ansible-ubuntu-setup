@@ -1,0 +1,8 @@
+---
+_chrome_repository_archive: deb
+_chrome_repository_architecture: amd64
+_chrome_repository_url: http://dl.google.com/linux/chrome/deb/
+_chrome_repository_component: stable main
+chrome_repository: "{{ _chrome_repository_archive }} [arch={{ _chrome_repository_architecture }}] {{ _chrome_repository_url }} {{ _chrome_repository_component }}"
+google_signing_key_id: D38B4796
+google_signing_key_url: https://dl-ssl.google.com/linux/linux_signing_key.pub

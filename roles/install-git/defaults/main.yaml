@@ -1,0 +1,4 @@
+---
+git_version: v2.21.0
+git_source_root: "{{ dependency_directory}}/git"
+git_build_root: "{{ dependency_directory}}/git_build"

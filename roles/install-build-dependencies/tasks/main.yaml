@@ -1,0 +1,17 @@
+---
+- name: Install build dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - autoconf
+    - automake
+    - build-essential
+    - cmake
+    - cmake-data
+    - libtool
+    - libtool-bin
+    - ninja-build
+    - pkg-config
+  become: yes

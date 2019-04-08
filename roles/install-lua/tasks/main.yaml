@@ -1,0 +1,11 @@
+---
+- name: Install Lua packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - liblua5.2-0
+    - liblua5.2-dev
+    - lua5.2
+  become: yes

@@ -1,0 +1,7 @@
+---
+zsh_release: zsh-5.7.1
+zsh_version: 5.7.1
+_zsh_root: "{{ dependency_directory }}/zsh/{{ zsh_version }}"
+zsh_source_root: "{{ _zsh_root }}/source"
+zsh_build_root: "{{ _zsh_root }}/build"
+zsh_install_root: "{{ _zsh_root }}/install"

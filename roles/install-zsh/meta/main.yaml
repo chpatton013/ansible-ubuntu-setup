@@ -1,0 +1,4 @@
+dependencies:
+- role: create-dependency-directory
+- role: create-environment-directory
+- role: install-go

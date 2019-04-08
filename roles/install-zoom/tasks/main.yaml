@@ -1,0 +1,10 @@
+---
+- name: Download Zoom deb
+  get_url:
+    url: https://zoom.us/client/latest/{{ zoom_deb_basename }}
+    dest: "{{ zoom_deb_path }}"
+    mode: 0660
+- name: Install Zoom deb
+  apt:
+    deb: "{{ zoom_deb_path }}"
+  become: yes

@@ -1,0 +1,3 @@
+---
+zoom_deb_basename: zoom_amd64.deb
+zoom_deb_path: "{{ dependency_directory }}/{{ zoom_deb_basename }}"

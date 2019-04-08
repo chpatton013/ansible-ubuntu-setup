@@ -1,0 +1,24 @@
+---
+- name: Download Slack deb
+  get_url:
+    url: >
+      https://downloads.slack-edge.com/linux_releases/{{ slack_deb_basename }}
+    dest: "{{ slack_deb_path }}"
+    mode: 0660
+- name: Install Slack dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - gdebi-core
+    - wget
+  become: yes
+- name: Install Slack deb
+  apt:
+    deb: "{{ slack_deb_path }}"
+  become: yes
+- name: Create Slack environment file
+  template:
+    src: slack.sh
+    dest: "{{ environment_directory }}"

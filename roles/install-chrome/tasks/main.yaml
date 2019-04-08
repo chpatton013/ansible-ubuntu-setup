@@ -1,0 +1,17 @@
+---
+- name: Install Google signing key
+  apt_key:
+    id: "{{ google_signing_key_id }}"
+    url: "{{ google_signing_key_url }}"
+    state: present
+  become: yes
+- name: Add Chrome repository
+  apt_repository:
+    repo: "{{ chrome_repository }}"
+    state: present
+  become: yes
+- name: Install Chrome package
+  apt:
+    name: google-chrome-stable
+    state: present
+  become: yes

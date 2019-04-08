@@ -1,0 +1,9 @@
+---
+pyenv_root: "{{ dependency_directory }}/pyenv"
+pyenv_version: v1.2.9
+python2_version: 2.7.16
+python3_version: 3.7.1
+python2_executable: "{{ pyenv_root }}/versions/{{ python2_version }}/bin/python"
+python3_executable: "{{ pyenv_root }}/versions/{{ python3_version }}/bin/python"
+python2_config_directory: "{{ pyenv_root }}/versions/{{ python2_version }}/lib/python2.7/config"
+python3_config_directory: "{{ pyenv_root }}/versions/{{ python3_version }}/lib/python3.7/config-3.7m-x86_64-linux-gnu"

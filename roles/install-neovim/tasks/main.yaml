@@ -1,0 +1,55 @@
+---
+# TODO: add $NEOVIM_INSTALL_ROOT/bin to PATH
+- name: Download Neovim source repository
+  git:
+    repo: https://github.com/neovim/neovim.git
+    dest: "{{ neovim_source_root }}"
+    depth: 1
+    version: "{{ neovim_release }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create Neovim install directory
+  file:
+    path: "{{ neovim_install_root }}"
+    state: directory
+- name: Create Neovim environment file
+  template:
+    src: neovim.sh
+    dest: "{{ environment_directory }}"
+- name: Install Neovim dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - gettext
+    - unzip
+  become: yes
+- name: Compile Neovim
+  command: >
+    make
+      --jobs={{ ansible_processor_vcpus }}
+      CMAKE_EXTRA_FLAGS=-DCMAKE_INSTALL_PREFIX={{ neovim_install_root }}
+      CMAKE_BUILD_TYPE=Release
+  args:
+    chdir: "{{ neovim_source_root }}"
+- name: Install Neovim
+  command: make install
+  args:
+    chdir: "{{ neovim_source_root }}"
+- name: Install Neovim Python support packages
+  pip:
+    executable: "{{ pyenv_root }}/versions/{{ item }}/bin/pip"
+    extra_args: --user
+    name: neovim
+    state: present
+  with_items:
+  - "{{ python2_version }}"
+  - "{{ python3_version }}"
+- name: Install Neovim Ruby support packages
+  gem:
+    executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/gem"
+    user_install: yes
+    name: neovim
+    state: present

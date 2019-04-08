@@ -1,0 +1,11 @@
+---
+- name: Install Apt dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+  become: yes

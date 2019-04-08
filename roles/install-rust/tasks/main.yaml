@@ -1,0 +1,44 @@
+---
+- name: Install system Rust package
+  apt:
+    name: rustc
+    state: present
+  become: yes
+- name: Download RustUp installer
+  get_url:
+    url: https://sh.rustup.rs
+    dest: "{{ dependency_directory }}/rustup.sh"
+    mode: 0550
+- name: Install RustUp
+  command: "{{ dependency_directory }}/rustup.sh --no-modify-path -y"
+  args:
+    creates:
+    - "{{ cargo_home }}"
+    - "{{ rustup_home }}"
+  environment:
+    CARGO_HOME: "{{ cargo_home }}"
+    RUSTUP_HOME: "{{ rustup_home }}"
+- name: Install Rust toolchains
+  command: "{{ cargo_home }}/bin/rustup install {{ item }}"
+  args:
+    creates: >
+      {{ rustup_home }}/toolchains/{{ item }}-x86_64-unknown-linux-gnu
+  with_items:
+  - stable
+  - nightly
+- name: Update RustUp and toolchains
+  command: "{{ cargo_home }}/bin/rustup update"
+- name: Set default Rust toolchains
+  command: "{{ cargo_home }}/bin/rustup default nightly"
+- name: Create bash completion rules
+  shell: >
+    {{ cargo_home }}/bin/rustup completions bash > \
+      {{ completions_directory }}/rustup.bash
+- name: Create zsh completion rules
+  shell: >
+    {{ cargo_home }}/bin/rustup completions zsh > \
+      {{ completions_directory }}/rustup.zsh
+- name: Create Rust environment file
+  template:
+    src: rust.sh
+    dest: "{{ environment_directory }}"

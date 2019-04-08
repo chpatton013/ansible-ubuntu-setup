@@ -1,0 +1,9 @@
+---
+_docker_repository_archive: deb
+_docker_repository_architecture: amd64
+_docker_repository_url: https://download.docker.com/linux/ubuntu
+_docker_repository_distribution: "{{ ansible_distribution_release }}"
+_docker_repository_component: stable
+docker_repository: "{{ _docker_repository_archive }} [arch={{ _docker_repository_architecture }}] {{ _docker_repository_url }} {{ _docker_repository_distribution }} {{ _docker_repository_component }}"
+docker_signing_key_id: 0EBFCD88
+docker_signing_key_url: https://download.docker.com/linux/ubuntu/gpg

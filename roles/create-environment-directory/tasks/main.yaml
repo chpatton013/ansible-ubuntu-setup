@@ -1,0 +1,5 @@
+---
+- name: Create environment directory
+  file:
+    path: "{{ environment_directory }}"
+    state: directory

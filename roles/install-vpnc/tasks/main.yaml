@@ -1,0 +1,11 @@
+---
+- name: Install user tools
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - network-manager-vpnc
+    - network-manager-vpnc-gnome
+    - vpnc
+  become: yes

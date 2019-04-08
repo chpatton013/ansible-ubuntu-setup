@@ -1,0 +1,65 @@
+---
+- name: Install system ZSH package
+  apt:
+    name: zsh
+    state: present
+  become: yes
+- name: Download ZSH source repository
+  git:
+    repo: https://github.com/zsh-users/zsh.git
+    dest: "{{ zsh_source_root }}"
+    depth: 1
+    version: "{{ zsh_release }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create ZSH environment file
+  template:
+    src: zsh.sh
+    dest: "{{ environment_directory }}"
+- name: Install ZSH dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - libncursesw5-dev
+    - texinfo
+    - yodl
+  become: yes
+- name: Create ZSH build directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ zsh_build_root }}"
+  - "{{ zsh_install_root }}"
+- name: Pre-configure ZSH
+  command: "{{ zsh_source_root }}/Util/preconfig"
+  args:
+    chdir: "{{ zsh_source_root }}"
+- name: Configure ZSH
+  command: >
+    {{ zsh_source_root }}/configure --prefix={{ zsh_install_root }}
+  args:
+    chdir: "{{ zsh_build_root }}"
+- name: Build ZSH
+  command: make --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ zsh_build_root }}"
+- name: Check ZSH
+  command: make check --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ zsh_build_root }}"
+- name: Install ZSH
+  command: make install --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ zsh_build_root }}"
+- name: Install ZSH info pages
+  command: make install.info
+  args:
+    chdir: "{{ zsh_build_root }}"
+- name: Install shfmt
+  command: go get mvdan.cc/sh/cmd/shfmt
+  environment:
+    GOPATH: "{{ go_path }}"

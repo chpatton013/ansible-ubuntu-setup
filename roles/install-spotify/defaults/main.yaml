@@ -1,0 +1,7 @@
+---
+_spotify_repository_archive: deb
+_spotify_repository_url: http://repository.spotify.com
+_spotify_repository_component: stable non-free
+spotify_repository: "{{ _spotify_repository_archive }} {{ _spotify_repository_url }} {{ _spotify_repository_component }}"
+spotify_signing_key_keyserver: hkp://keyserver.ubuntu.com:80
+spotify_signing_key_id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90

@@ -1,0 +1,2 @@
+---
+go_path: "{{ dependency_directory}}/go"

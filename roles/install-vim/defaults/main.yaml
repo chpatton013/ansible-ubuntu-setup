@@ -1,0 +1,4 @@
+---
+vim_source_root: "{{ dependency_directory }}/vim"
+vim_build_root: "{{ dependency_directory }}/vim_build"
+vim_version: v8.1.1048

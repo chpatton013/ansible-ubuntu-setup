@@ -1,0 +1,58 @@
+---
+# TODO: add $GIT_BUILD_ROOT/bin to PATH
+# TODO: add $GIT_SOURCE_ROOT/contrib/completion/git-completion.{bash,zsh} to shell
+- name: Install system Git package
+  apt:
+    name: git-core
+    state: present
+  become: yes
+- name: Download Git source repository
+  git:
+    repo: https://github.com/git/git.git
+    dest: "{{ git_source_root }}"
+    depth: 1
+    version: "{{ git_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create Git build directory
+  file:
+    path: "{{ git_build_root }}"
+    state: directory
+- name: Create Git environment file
+  template:
+    src: git.sh
+    dest: "{{ environment_directory }}"
+- name: Install Git dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - asciidoc
+    - dh-autoreconf
+    - docbook2x
+    - gettext
+    - install-info
+    - libcurl4-gnutls-dev
+    - libexpat1-dev
+    - libssl-dev
+    - libz-dev
+    - xmlto
+  become: yes
+- name: Build Git configure script
+  command: make configure
+  args:
+    chdir: "{{ git_source_root }}"
+- name: Run Git configure script
+  command: ./configure --prefix={{ git_build_root }}
+  args:
+    chdir: "{{ git_source_root }}"
+- name: Build Git
+  command: make all doc info --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ git_source_root }}"
+- name: Install Git
+  command: make install install-doc install-html install-info
+  args:
+    chdir: "{{ git_source_root }}"

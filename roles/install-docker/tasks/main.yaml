@@ -1,0 +1,34 @@
+---
+- name: Install Docker signing key
+  apt_key:
+    id: "{{ docker_signing_key_id }}"
+    url: "{{ docker_signing_key_url }}"
+    state: present
+  become: yes
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+  become: yes
+- name: Install Docker package
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - docker-ce
+    - docker-compose
+    - docker-registry
+  become: yes
+- name: Add user to Docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+  become: yes
+- name: Start and enable Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+  become: yes

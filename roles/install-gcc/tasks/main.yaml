@@ -1,0 +1,48 @@
+---
+# TODO: add $GCC_INSTALL_ROOT/bin to PATH
+- name: Download GCC source repository
+  git:
+    # The canonical GCC repository (https://gcc.gnu.org/git/gcc.git) does not
+    # support shallow clones over https. However, the Github mirror does.
+    repo: https://github.com/gcc-mirror/gcc.git
+    dest: "{{ gcc_source_root }}"
+    depth: 1
+    version: "{{ gcc_release }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create GCC build directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ gcc_build_root }}"
+  - "{{ gcc_install_root }}"
+- name: Install GCC dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - flex
+    - libgmp-dev
+    - libmpc-dev
+    - libmpfr-dev
+    - libc6-dev
+    - libc6-dev-i386 # Required for multilib support
+  become: yes
+- name: Run GCC configure script
+  command: >
+    {{ gcc_source_root }}/configure
+      --prefix={{ gcc_install_root }}
+      --enable-languages=c,c++,fortran,lto,objc,obj-c++
+  args:
+    chdir: "{{ gcc_build_root }}"
+- name: Build GCC
+  command: make --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ gcc_build_root }}"
+- name: Install GCC
+  command: make install
+  args:
+    chdir: "{{ gcc_build_root }}"

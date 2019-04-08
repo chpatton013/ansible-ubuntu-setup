@@ -1,0 +1,17 @@
+---
+- name: Install Spotify signing key
+  apt_key:
+    keyserver: "{{ spotify_signing_key_keyserver }}"
+    id: "{{ spotify_signing_key_id }}"
+    state: present
+  become: yes
+- name: Add Spotify repository
+  apt_repository:
+    repo: "{{ spotify_repository }}"
+    state: present
+  become: yes
+- name: Install user tools
+  apt:
+    name: spotify-client
+    state: present
+  become: yes

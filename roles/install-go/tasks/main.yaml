@@ -1,0 +1,14 @@
+---
+- name: Install system Go package
+  apt:
+    name: golang
+    state: present
+  become: yes
+- name: Create GOPATH directory
+  file:
+    path: "{{ go_path }}"
+    state: directory
+- name: Create Go environment file
+  template:
+    src: go.sh
+    dest: "{{ environment_directory }}"

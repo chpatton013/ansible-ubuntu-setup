@@ -1,0 +1,6 @@
+---
+rbenv_root: "{{ dependency_directory }}/rbenv"
+rbenv_version: v1.1.2
+ruby_build_version: v20190320
+ruby_version: 2.6.2
+ruby_executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/ruby"

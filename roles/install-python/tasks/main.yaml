@@ -1,0 +1,81 @@
+---
+# TODO: add $PYENV_ROOT/bin and $PYENV_ROOT/shims to PATH
+# TODO: add $PYENV_ROOT/completions/pyenv.{bash,zsh} to shell
+- name: Install system Python packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - python
+    - python-pip
+    - python3
+    - python3-pip
+  become: yes
+- name: Download PyEnv source repository
+  git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: "{{ pyenv_root }}"
+    depth: 1
+    version: "{{ pyenv_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create Python environment file
+  template:
+    src: python.sh
+    dest: "{{ environment_directory }}"
+- name: Install Python dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - curl
+    - libbz2-dev
+    - libffi-dev
+    - liblzma-dev
+    - libncurses5-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxmlsec1-dev
+    - llvm
+    - tk-dev
+    - wget
+    - xz-utils
+    - zlib1g-dev
+  become: yes
+- name: Build Python versions
+  command: "{{ pyenv_root }}/bin/pyenv install {{ item }}"
+  environment:
+    PYENV_ROOT: "{{ pyenv_root }}"
+    PYTHON_CONFIGURE_OPTS: >
+      --prefix={{ pyenv_root }}/versions/{{ item }}
+      --exec-prefix={{ pyenv_root }}/versions/{{ item }}
+      --enable-optimizations
+      --enable-ipv6
+      --with-lto
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ item }}/bin/python"
+  with_items:
+  - "{{ python2_version }}"
+  - "{{ python3_version }}"
+- name: Activate Python versions
+  command: >
+    {{ pyenv_root }}/bin/pyenv global {{ python3_version }} {{ python2_version }}
+  environment:
+    PYENV_ROOT: "{{ pyenv_root }}"
+- name: Rehash PyEnv shims
+  command: "{{ pyenv_root }}/bin/pyenv rehash"
+  environment:
+    PYENV_ROOT: "{{ pyenv_root }}"
+- name: Install Python development packages
+  pip:
+    executable: "{{ pyenv_root }}/versions/{{ python3_version }}/bin/pip"
+    extra_args: --user
+    name:
+    - pylint
+    - yapf
+    state: present

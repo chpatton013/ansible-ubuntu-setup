@@ -1,0 +1,24 @@
+---
+- name: Install user tools
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - avahi-autoipd
+    - avahi-daemon
+    - firefox
+    - gnome-tweak-tool
+    - htop
+    - i3
+    - ifstat
+    - lm-sensors
+    - nmap
+    - openssh-client
+    - screen
+    - stow
+    - sysstat
+    - tree
+    - wdiff
+    - xclip
+  become: yes

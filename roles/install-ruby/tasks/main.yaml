@@ -1,0 +1,51 @@
+---
+# TODO: add $RBENV_ROOT/bin and $RBENV_ROOT/shims to PATH
+# TODO: add $RBENV_ROOT/completions/rbenv.{bash,zsh} to shell
+- name: Install system Ruby package
+  apt:
+    name: ruby
+    state: present
+  become: yes
+- name: Download RbEnv source repository
+  git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: "{{ rbenv_root }}"
+    depth: 1
+    version: "{{ rbenv_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Download ruby-build source repository
+  git:
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: "{{ rbenv_root }}/plugins/ruby-build"
+    depth: 1
+    version: "{{ ruby_build_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create RbEnv environment file
+  template:
+    src: ruby.sh
+    dest: "{{ environment_directory }}"
+- name: Build Ruby versions
+  command: "{{ rbenv_root }}/bin/rbenv install {{ ruby_version }}"
+  environment:
+    CFLAGS: -O2
+    RBENV_ROOT: "{{ rbenv_root }}"
+  args:
+    creates: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/ruby"
+- name: Activate Ruby version
+  command: "{{ rbenv_root }}/bin/rbenv global {{ ruby_version }}"
+  environment:
+    RBENV_ROOT: "{{ rbenv_root }}"
+- name: Rehash RbEnv shims
+  command: "{{ rbenv_root }}/bin/rbenv rehash"
+  environment:
+    RBENV_ROOT: "{{ rbenv_root }}"
+- name: Install Ruby development packages
+  gem:
+    executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/gem"
+    user_install: yes
+    name: rubocop
+    state: present

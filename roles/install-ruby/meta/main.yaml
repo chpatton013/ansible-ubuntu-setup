@@ -1,0 +1,5 @@
+dependencies:
+- role: create-dependency-directory
+- role: create-environment-directory
+- role: install-build-dependencies
+- role: install-git

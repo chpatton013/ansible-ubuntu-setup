@@ -1,0 +1,74 @@
+---
+# TODO: add $VIM_BUILD_ROOT/bin to PATH
+- name: Install system Vim package
+  apt:
+    name: vim-nox
+    state: present
+  become: yes
+- name: Download Vim source repository
+  git:
+    repo: https://github.com/vim/vim.git
+    dest: "{{ vim_source_root }}"
+    depth: 1
+    version: "{{ vim_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create Vim install directory
+  file:
+    path: "{{ vim_build_root }}"
+    state: directory
+- name: Create Vim environment file
+  template:
+    src: vim.sh
+    dest: "{{ environment_directory }}"
+- name: Install Vim dependency packages
+  apt:
+    name: libperl-dev
+    state: present
+  become: yes
+- name: Configure Vim
+  command: >
+    ./configure
+      --disable-darwin
+      --enable-autoservername
+      --enable-cscope
+      --enable-fail-if-missing
+      --enable-luainterp=yes
+      --enable-multibyte
+      --enable-mzschemeinterp
+      --enable-perlinterp=yes
+      --enable-python3interp=yes
+      --enable-pythoninterp=yes
+      --enable-rubyinterp=yes
+      --enable-tclinterp=yes
+      --enable-terminal
+      --exec-prefix={{ vim_build_root }}
+      --prefix={{ vim_build_root }}
+      --with-compiledby={{ ansible_user_id }}
+      --with-features=huge
+      --with-python-command={{ python2_executable }}
+      --with-python-config-dir={{ python2_config_directory }}
+      --with-python3-command={{ python3_executable }}
+      --with-python3-config-dir={{ python3_config_directory }}
+      --with-ruby-command={{ ruby_executable }}
+      --with-x
+  args:
+    chdir: "{{ vim_source_root }}"
+    creates:
+    - "{{ vim_source_root }}/Makefile"
+    - "{{ vim_source_root }}/src/auto/config.h"
+- name: Compile Vim
+  command: make --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ vim_source_root }}"
+- name: Install Vim
+  command: make install
+  args:
+    chdir: "{{ vim_source_root }}"
+- name: Install Vim development packages
+  pip:
+    executable: "{{ pyenv_root }}/versions/{{ python3_version }}/bin/pip"
+    extra_args: --user
+    name: vim-vint
+    state: present
