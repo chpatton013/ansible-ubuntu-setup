@@ -1,0 +1,57 @@
+---
+- name: Install dev tool system packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - grip
+    - "linux-headers-{{ ansible_kernel }}"
+    - "linux-image-{{ ansible_kernel }}"
+  become: yes
+- name: Install dev tool pip packages
+  pip:
+    executable: "{{ python3_bin_directory }}/pip"
+    extra_args: --user
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - gdbgui
+    - pylint
+    - vim-vint
+    - yapf
+- name: Install dev tool gem packages
+  gem:
+    executable: "{{ ruby_bin_directory }}/gem"
+    user_install: yes
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - rails
+    - rubocop
+    - sass
+- name: Install dev tool npm packages
+  npm:
+    path: "{{ node_modules_directory }}"
+    name:
+    - eslint
+    - eslint-plugin-vue
+    - js-beautify
+    - remark-cli
+    state: present
+- name: Install dev tool go packages
+  command: go get "{{ packages }}"
+  vars:
+    packages:
+    - mvdan.cc/sh/cmd/shfmt
+- name: Install dev tool cargo packages
+  command: >
+    {{ cargo_home }}/bin/cargo install "{{ packages }}"
+  environment:
+    CARGO_HOME: "{{ cargo_home }}"
+  vars:
+    packages:
+    - rg
+    - fd

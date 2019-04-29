@@ -12,11 +12,3 @@
   file:
     path: "{{ node_modules_directory }}"
     state: directory
-- name: Install JS development packages
-  npm:
-    path: "{{ node_modules_directory }}"
-    name:
-    - eslint
-    - eslint-plugin-vue
-    - js-beautify
-    state: present

@@ -43,9 +43,3 @@
   command: "{{ rbenv_root }}/bin/rbenv rehash"
   environment:
     RBENV_ROOT: "{{ rbenv_root }}"
-- name: Install Ruby development packages
-  gem:
-    executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/gem"
-    user_install: yes
-    name: rubocop
-    state: present

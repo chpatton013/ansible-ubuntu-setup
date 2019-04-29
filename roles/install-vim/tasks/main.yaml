@@ -66,9 +66,3 @@
   command: make install
   args:
     chdir: "{{ vim_build_root }}"
-- name: Install Vim development packages
-  pip:
-    executable: "{{ python3_bin_directory }}/pip"
-    extra_args: --user
-    name: vim-vint
-    state: present

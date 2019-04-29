@@ -59,7 +59,3 @@
   command: make install.info
   args:
     chdir: "{{ zsh_build_root }}"
-- name: Install shfmt
-  command: go get mvdan.cc/sh/cmd/shfmt
-  environment:
-    GOPATH: "{{ go_path }}"

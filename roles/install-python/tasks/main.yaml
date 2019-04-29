@@ -71,11 +71,3 @@
   command: "{{ pyenv_root }}/bin/pyenv rehash"
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
-- name: Install Python development packages
-  pip:
-    executable: "{{ pyenv_root }}/versions/{{ python3_version }}/bin/pip"
-    extra_args: --user
-    name:
-    - pylint
-    - yapf
-    state: present

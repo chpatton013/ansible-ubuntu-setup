@@ -1,0 +1,7 @@
+dependencies:
+- role: install-apt-dependencies
+- role: install-js
+- role: install-go
+- role: install-python
+- role: install-ruby
+- role: install-rust
