@@ -4,13 +4,13 @@ pyenv_release: v1.2.9
 pyenv_root: "{{ dependency_directory }}/pyenv/{{ pyenv_version }}"
 pyenv_versions_root: "{{ pyenv_root }}/versions"
 
-python2_version: 2.7.16
+python2_version: 2.7.15
 python2_root_directory: "{{ pyenv_versions_root }}/{{ python2_version }}"
 python2_bin_directory: "{{ python2_root_directory }}/bin"
 python2_lib_directory: "{{ python2_root_directory }}/lib"
 python2_config_directory: "{{ python2_lib_directory }}/python2.7/config"
 
-python3_version: 3.7.1
+python3_version: 3.7.2
 python3_root_directory: "{{ pyenv_versions_root }}/{{ python3_version }}"
 python3_bin_directory: "{{ python3_root_directory }}/bin"
 python3_lib_directory: "{{ python3_root_directory }}/lib"
