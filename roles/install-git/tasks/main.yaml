@@ -11,14 +11,17 @@
     repo: https://github.com/git/git.git
     dest: "{{ git_source_root }}"
     depth: 1
-    version: "{{ git_version }}"
+    version: "{{ git_release }}"
     clone: yes
     update: yes
     recursive: yes
-- name: Create Git build directory
+- name: Create Git build directories
   file:
-    path: "{{ git_build_root }}"
+    path: "{{ item }}"
     state: directory
+  with_items:
+  - "{{ git_build_root }}"
+  - "{{ git_install_root }}"
 - name: Create Git environment file
   template:
     src: git.sh
@@ -44,15 +47,20 @@
   command: make configure
   args:
     chdir: "{{ git_source_root }}"
+    creates: "{{ git_source_root }}/configure"
 - name: Run Git configure script
-  command: ./configure --prefix={{ git_build_root }}
+  command: "{{ git_source_root }}/configure --prefix={{ git_install_root }}"
   args:
-    chdir: "{{ git_source_root }}"
+    chdir: "{{ git_build_root }}"
+    creates: "{{ git_build_root }}/Makefile"
 - name: Build Git
   command: make all doc info --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ git_source_root }}"
+    chdir: "{{ git_build_root }}"
 - name: Install Git
-  command: make install install-doc install-html install-info
+  command: >
+    make
+      install install-doc install-html install-info
+      --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ git_source_root }}"
+    chdir: "{{ git_build_root }}"
