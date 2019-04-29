@@ -1,6 +1,7 @@
 ---
 - hosts: localhost
   roles:
+  - install-bazel
   - install-chrome
   - install-docker
   - install-etckeeper

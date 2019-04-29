@@ -1,0 +1,38 @@
+---
+# TODO: add $BAZEL_INSTALL_ROOT/bin to PATH
+# TODO: add $BAZEL_INSTALL_ROOT/lib/bazel/bin/{bazel-complete.bash,_bazel} to shell
+- name: Create Bazel root directory
+  file:
+    path: "{{ bazel_root }}"
+    state: directory
+- name: Download Bazel release
+  get_url:
+    url: "{{ bazel_installer_url }}"
+    dest: "{{ bazel_installer }}"
+    mode: 0700
+- name: Create Bazel install directory
+  file:
+    path: "{{ bazel_install_root }}"
+    state: directory
+- name: Create Bazel environment file
+  template:
+    src: bazel.sh
+    dest: "{{ environment_directory }}"
+- name: Install Bazel dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - unzip
+    - zip
+    - zlib1g-dev
+  become: yes
+- name: Install Bazel
+  command: "{{ bazel_installer }} --prefix={{ bazel_install_root }}"
+- name: Install Bazel build tools
+  command: >
+    go get
+      github.com/bazelbuild/buildtools/buildifier
+      github.com/bazelbuild/buildtools/buildozer
+      github.com/bazelbuild/buildtools/unused_deps
