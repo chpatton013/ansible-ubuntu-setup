@@ -1,0 +1,70 @@
+---
+# TODO: add $TMUX_INSTALL_ROOT/bin to PATH
+- name: Install system Tmux package
+  apt:
+    name: tmux
+    state: present
+  become: yes
+- name: Download Tmux source repository
+  git:
+    repo: https://github.com/tmux/tmux.git
+    dest: "{{ tmux_source_root }}"
+    depth: 1
+    version: "{{ tmux_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
+- name: Create Tmux install directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ tmux_build_root }}"
+  - "{{ tmux_install_root }}"
+- name: Create Tmux environment file
+  template:
+    src: tmux.sh
+    dest: "{{ environment_directory }}"
+- name: Install Tmux dependency packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - libevent-2.1-6
+    - libevent-dev
+    - libncurses5-dev
+    - libutempter-dev
+    - libutempter0
+    - libutf8proc-dev
+    - libutf8proc2
+  become: yes
+- name: Pre-configure Tmux
+  command: sh autogen.sh
+  args:
+    chdir: "{{ tmux_source_root }}"
+- name: Configure Tmux
+  command: >
+    {{ tmux_source_root}}/configure
+      --enable-utempter
+      --enable-utf8proc
+      --prefix={{ tmux_install_root }}
+  args:
+    chdir: "{{ tmux_build_root }}"
+- name: Build Tmux
+  command: make --jobs={{ ansible_processor_vcpus }}
+  args:
+    chdir: "{{ tmux_build_root }}"
+- name: Install Tmux
+  command: make install
+  args:
+    chdir: "{{ tmux_build_root }}"
+- name: Install Tmux plugin manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "{{ tpm_root }}"
+    depth: 1
+    version: "{{ tpm_version }}"
+    clone: yes
+    update: yes
+    recursive: yes
