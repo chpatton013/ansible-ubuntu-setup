@@ -34,7 +34,7 @@
     CFLAGS: -O2
     RBENV_ROOT: "{{ rbenv_root }}"
   args:
-    creates: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/ruby"
+    creates: "{{ ruby_bin_directory }}/ruby"
 - name: Activate Ruby version
   command: "{{ rbenv_root }}/bin/rbenv global {{ ruby_version }}"
   environment:
