@@ -1,5 +1,5 @@
 ---
-- name: Install user tools
+- name: Install VPNC packages
   apt:
     name: "{{ packages }}"
     state: present
