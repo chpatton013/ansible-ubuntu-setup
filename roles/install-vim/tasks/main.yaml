@@ -47,11 +47,11 @@
       --prefix={{ vim_build_root }}
       --with-compiledby={{ ansible_user_id }}
       --with-features=huge
-      --with-python-command={{ python2_executable }}
+      --with-python-command={{ python2_bin_directory }}/python
       --with-python-config-dir={{ python2_config_directory }}
-      --with-python3-command={{ python3_executable }}
+      --with-python3-command={{ python3_bin_directory }}/python
       --with-python3-config-dir={{ python3_config_directory }}
-      --with-ruby-command={{ ruby_executable }}
+      --with-ruby-command={{ ruby_bin_directory }}/ruby
       --with-x
   args:
     chdir: "{{ vim_source_root }}"
@@ -68,7 +68,7 @@
     chdir: "{{ vim_source_root }}"
 - name: Install Vim development packages
   pip:
-    executable: "{{ pyenv_root }}/versions/{{ python3_version }}/bin/pip"
+    executable: "{{ python3_bin_directory }}/pip"
     extra_args: --user
     name: vim-vint
     state: present

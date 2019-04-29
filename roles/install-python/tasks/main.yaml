@@ -17,7 +17,7 @@
     repo: https://github.com/pyenv/pyenv.git
     dest: "{{ pyenv_root }}"
     depth: 1
-    version: "{{ pyenv_version }}"
+    version: "{{ pyenv_release }}"
     clone: yes
     update: yes
     recursive: yes

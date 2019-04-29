@@ -40,16 +40,16 @@
     chdir: "{{ neovim_source_root }}"
 - name: Install Neovim Python support packages
   pip:
-    executable: "{{ pyenv_root }}/versions/{{ item }}/bin/pip"
+    executable: "{{ item }}/pip"
     extra_args: --user
     name: neovim
     state: present
   with_items:
-  - "{{ python2_version }}"
-  - "{{ python3_version }}"
+  - "{{ python2_bin_directory }}"
+  - "{{ python3_bin_directory }}"
 - name: Install Neovim Ruby support packages
   gem:
-    executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/gem"
+    executable: "{{ ruby_bin_directory }}/gem"
     user_install: yes
     name: neovim
     state: present

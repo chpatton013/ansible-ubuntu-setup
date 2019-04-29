@@ -11,14 +11,14 @@
     repo: https://github.com/rbenv/rbenv.git
     dest: "{{ rbenv_root }}"
     depth: 1
-    version: "{{ rbenv_version }}"
+    version: "{{ rbenv_release }}"
     clone: yes
     update: yes
     recursive: yes
 - name: Download ruby-build source repository
   git:
     repo: https://github.com/rbenv/ruby-build.git
-    dest: "{{ rbenv_root }}/plugins/ruby-build"
+    dest: "{{ rbenv_plugins_root }}/ruby-build"
     depth: 1
     version: "{{ ruby_build_version }}"
     clone: yes
