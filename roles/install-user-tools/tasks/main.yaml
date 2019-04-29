@@ -7,8 +7,10 @@
     packages:
     - avahi-autoipd
     - avahi-daemon
+    - cryptsetup
     - firefox
     - gnome-tweak-tool
+    - gparted
     - htop
     - i3
     - ifstat
