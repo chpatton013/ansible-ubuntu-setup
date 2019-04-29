@@ -29,7 +29,7 @@
   become: yes
 - name: Configure Vim
   command: >
-    ./configure
+    {{ vim_source_root }}/configure
       --disable-darwin
       --enable-autoservername
       --enable-cscope
@@ -43,8 +43,8 @@
       --enable-rubyinterp=yes
       --enable-tclinterp=yes
       --enable-terminal
-      --exec-prefix={{ vim_build_root }}
-      --prefix={{ vim_build_root }}
+      --exec-prefix={{ vim_install_root }}
+      --prefix={{ vim_install_root }}
       --with-compiledby={{ ansible_user_id }}
       --with-features=huge
       --with-python-command={{ python2_bin_directory }}/python
@@ -54,18 +54,18 @@
       --with-ruby-command={{ ruby_bin_directory }}/ruby
       --with-x
   args:
-    chdir: "{{ vim_source_root }}"
+    chdir: "{{ vim_build_root }}"
     creates:
-    - "{{ vim_source_root }}/Makefile"
-    - "{{ vim_source_root }}/src/auto/config.h"
+    - "{{ vim_build_root }}/Makefile"
+    - "{{ vim_build_root }}/src/auto/config.h"
 - name: Compile Vim
   command: make --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ vim_source_root }}"
+    chdir: "{{ vim_build_root }}"
 - name: Install Vim
   command: make install
   args:
-    chdir: "{{ vim_source_root }}"
+    chdir: "{{ vim_build_root }}"
 - name: Install Vim development packages
   pip:
     executable: "{{ python3_bin_directory }}/pip"
