@@ -1,5 +1,5 @@
 ---
-- name: Install system inotify package
+- name: Install inotify package
   apt:
     name: inotify-tools
     state: present

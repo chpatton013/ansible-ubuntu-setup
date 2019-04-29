@@ -5,7 +5,7 @@
     id: "{{ spotify_signing_key_id }}"
     state: present
   become: yes
-- name: Add Spotify repository
+- name: Add Spotify Apt repository
   apt_repository:
     repo: "{{ spotify_repository }}"
     state: present

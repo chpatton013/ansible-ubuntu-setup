@@ -5,7 +5,7 @@
     url: "{{ google_signing_key_url }}"
     state: present
   become: yes
-- name: Add Chrome repository
+- name: Add Chrome Apt repository
   apt_repository:
     repo: "{{ chrome_repository }}"
     state: present

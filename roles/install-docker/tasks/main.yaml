@@ -5,12 +5,12 @@
     url: "{{ docker_signing_key_url }}"
     state: present
   become: yes
-- name: Add Docker repository
+- name: Add Docker Apt repository
   apt_repository:
     repo: "{{ docker_repository }}"
     state: present
   become: yes
-- name: Install Docker package
+- name: Install Docker packages
   apt:
     name: "{{ packages }}"
     state: present
