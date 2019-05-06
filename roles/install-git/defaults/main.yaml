@@ -3,5 +3,4 @@ git_version: 2.21.0
 git_release: v2.21.0
 _git_root: "{{ dependency_directory}}/git/{{ git_version }}"
 git_source_root: "{{ _git_root }}/source"
-git_build_root: "{{ _git_root }}/build"
 git_install_root: "{{ _git_root }}/install"

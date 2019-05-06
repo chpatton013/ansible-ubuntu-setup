@@ -1,5 +1,5 @@
 ---
-# TODO: add $GIT_BUILD_ROOT/bin to PATH
+# TODO: add $GIT_INSTALL_ROOT/bin to PATH
 # TODO: add $GIT_SOURCE_ROOT/contrib/completion/git-completion.{bash,zsh} to shell
 - name: Install system Git package
   apt:
@@ -15,13 +15,10 @@
     clone: yes
     update: yes
     recursive: yes
-- name: Create Git build directories
+- name: Create Git install directory
   file:
-    path: "{{ item }}"
+    path: "{{ git_install_root }}"
     state: directory
-  with_items:
-  - "{{ git_build_root }}"
-  - "{{ git_install_root }}"
 - name: Create Git environment file
   template:
     src: git.sh
@@ -47,20 +44,26 @@
   command: make configure
   args:
     chdir: "{{ git_source_root }}"
-    creates: "{{ git_source_root }}/configure"
+    creates:
+    - "{{ git_source_root }}/GIT-VERSION-FILE"
+    - "{{ git_source_root }}/autom4te.cache/"
+    - "{{ git_source_root }}/configure"
 - name: Run Git configure script
   command: "{{ git_source_root }}/configure --prefix={{ git_install_root }}"
   args:
-    chdir: "{{ git_build_root }}"
-    creates: "{{ git_build_root }}/Makefile"
+    chdir: "{{ git_source_root }}"
+    creates:
+    - "{{ git_source_root }}/config.log"
+    - "{{ git_source_root }}/config.mak.autogen"
+    - "{{ git_source_root }}/config.status"
 - name: Build Git
   command: make all doc info --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ git_build_root }}"
+    chdir: "{{ git_source_root }}"
 - name: Install Git
   command: >
     make
       install install-doc install-html install-info
       --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ git_build_root }}"
+    chdir: "{{ git_source_root }}"
