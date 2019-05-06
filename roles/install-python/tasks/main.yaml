@@ -48,7 +48,8 @@
     - zlib1g-dev
   become: yes
 - name: Build Python versions
-  command: "{{ pyenv_root }}/bin/pyenv install {{ item }}"
+  command: >
+    {{ pyenv_root }}/bin/pyenv install {{ item }}
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
     PYTHON_CONFIGURE_OPTS: >
@@ -63,14 +64,12 @@
   - "{{ python2_version }}"
   - "{{ python3_version }}"
 - name: Activate Python versions
-  command: "{{ pyenv_root }}/bin/pyenv global {{ versions }}"
+  command: >
+    {{ pyenv_root }}/bin/pyenv global {{ python3_version }} {{ python2_version }}
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
-  vars:
-    versions:
-    - "{{ python2_version }}"
-    - "{{ python3_version }}"
 - name: Rehash PyEnv shims
-  command: "{{ pyenv_root }}/bin/pyenv rehash"
+  command: >
+    {{ pyenv_root }}/bin/pyenv rehash
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
