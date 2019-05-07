@@ -29,17 +29,20 @@
     src: ruby.sh
     dest: "{{ environment_directory }}"
 - name: Build Ruby versions
-  command: "{{ rbenv_root }}/bin/rbenv install {{ ruby_version }}"
+  command: >
+    {{ rbenv_root }}/bin/rbenv install {{ ruby_version }}
   environment:
     CFLAGS: -O2
     RBENV_ROOT: "{{ rbenv_root }}"
   args:
     creates: "{{ ruby_bin_directory }}/ruby"
 - name: Activate Ruby version
-  command: "{{ rbenv_root }}/bin/rbenv global {{ ruby_version }}"
+  command: >
+    {{ rbenv_root }}/bin/rbenv global {{ ruby_version }}
   environment:
     RBENV_ROOT: "{{ rbenv_root }}"
 - name: Rehash RbEnv shims
-  command: "{{ rbenv_root }}/bin/rbenv rehash"
+  command: >
+    {{ rbenv_root }}/bin/rbenv rehash
   environment:
     RBENV_ROOT: "{{ rbenv_root }}"
