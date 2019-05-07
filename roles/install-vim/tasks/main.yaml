@@ -1,5 +1,5 @@
 ---
-# TODO: add $VIM_BUILD_ROOT/bin to PATH
+# TODO: add $VIM_INSTALL_ROOT/bin to PATH
 - name: Install system Vim package
   apt:
     name: vim-nox
@@ -10,13 +10,13 @@
     repo: https://github.com/vim/vim.git
     dest: "{{ vim_source_root }}"
     depth: 1
-    version: "{{ vim_version }}"
+    version: "{{ vim_release }}"
     clone: yes
     update: yes
     recursive: yes
-- name: Create Vim install directory
+- name: Create Vim build directories
   file:
-    path: "{{ vim_build_root }}"
+    path: "{{ vim_install_root }}"
     state: directory
 - name: Create Vim environment file
   template:
@@ -29,7 +29,7 @@
   become: yes
 - name: Configure Vim
   command: >
-    {{ vim_source_root }}/configure
+    ./configure
       --disable-darwin
       --enable-autoservername
       --enable-cscope
@@ -54,15 +54,15 @@
       --with-ruby-command={{ ruby_bin_directory }}/ruby
       --with-x
   args:
-    chdir: "{{ vim_build_root }}"
+    chdir: "{{ vim_source_root }}"
     creates:
-    - "{{ vim_build_root }}/Makefile"
-    - "{{ vim_build_root }}/src/auto/config.h"
+    - "{{ vim_source_root }}/Makefile"
+    - "{{ vim_source_root }}/src/auto/config.h"
 - name: Compile Vim
   command: make --jobs={{ ansible_processor_vcpus }}
   args:
-    chdir: "{{ vim_build_root }}"
+    chdir: "{{ vim_source_root }}"
 - name: Install Vim
   command: make install
   args:
-    chdir: "{{ vim_build_root }}"
+    chdir: "{{ vim_source_root }}"
