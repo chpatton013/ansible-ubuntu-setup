@@ -1,6 +1,6 @@
 ---
 pyenv_version: 1.2.9
-pyenv_release: v1.2.9
+pyenv_release: "v{{ pyenv_version }}"
 pyenv_root: "{{ dependency_directory }}/pyenv/{{ pyenv_version }}"
 pyenv_versions_root: "{{ pyenv_root }}/versions"
 

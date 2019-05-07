@@ -1,6 +1,6 @@
 ---
-tmux_release: 2.8
 tmux_version: 2.8
+tmux_release: "{{ tmux_version }}"
 _tmux_root: "{{ dependency_directory }}/tmux/{{ tmux_version }}"
 tmux_source_root: "{{ _tmux_root }}/source"
 tmux_build_root: "{{ _tmux_root }}/build"

@@ -1,6 +1,6 @@
 ---
 rbenv_version: 1.1.2
-rbenv_release: v1.1.2
+rbenv_release: "v{{ rbenv_version }}"
 rbenv_root: "{{ dependency_directory }}/rbenv/{{ rbenv_version }}"
 rbenv_versions_root: "{{ rbenv_root }}/versions"
 rbenv_plugins_root: "{{ rbenv_root }}/plugins"

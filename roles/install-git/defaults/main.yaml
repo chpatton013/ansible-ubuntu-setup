@@ -1,6 +1,6 @@
 ---
 git_version: 2.21.0
-git_release: v2.21.0
+git_release: "v{{ git_version }}"
 _git_root: "{{ dependency_directory}}/git/{{ git_version }}"
 git_source_root: "{{ _git_root }}/source"
 git_install_root: "{{ _git_root }}/install"
