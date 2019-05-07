@@ -1,5 +1,5 @@
 dependencies:
 - role: create-completions-directory
-- role: create-dependency-directory
+- role: create-setup-directory
 - role: create-environment-directory
 - role: install-build-dependencies

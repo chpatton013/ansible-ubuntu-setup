@@ -1,2 +1,0 @@
----
-dependency_directory: "{{ ansible_user_dir }}/dependencies"

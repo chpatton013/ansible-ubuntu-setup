@@ -1,5 +1,0 @@
----
-- name: Create dependency directory
-  file:
-    path: "{{ dependency_directory }}"
-    state: directory

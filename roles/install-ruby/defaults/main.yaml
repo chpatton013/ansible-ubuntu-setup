@@ -1,7 +1,7 @@
 ---
 rbenv_version: 1.1.2
 rbenv_release: "v{{ rbenv_version }}"
-rbenv_root: "{{ dependency_directory }}/rbenv/{{ rbenv_version }}"
+rbenv_root: "{{ setup_directory }}/rbenv/{{ rbenv_version }}"
 rbenv_versions_root: "{{ rbenv_root }}/versions"
 rbenv_plugins_root: "{{ rbenv_root }}/plugins"
 
@@ -12,4 +12,4 @@ ruby_root_directory: "{{ rbenv_versions_root }}/{{ ruby_version }}"
 ruby_bin_directory: "{{ ruby_root_directory }}/bin"
 ruby_lib_directory: "{{ ruby_root_directory }}/lib"
 
-gem_home: "{{ dependency_directory }}/gems"
+gem_home: "{{ setup_directory }}/gems"

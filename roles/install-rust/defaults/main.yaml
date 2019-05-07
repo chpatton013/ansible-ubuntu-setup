@@ -1,3 +1,3 @@
 ---
-cargo_home: "{{ dependency_directory }}/cargo"
-rustup_home: "{{ dependency_directory }}/multirust"
+cargo_home: "{{ setup_directory }}/cargo"
+rustup_home: "{{ setup_directory }}/multirust"

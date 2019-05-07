@@ -1,2 +1,2 @@
 ---
-node_modules_directory: "{{ dependency_directory }}/node_modules"
+node_modules_directory: "{{ setup_directory }}/node_modules"

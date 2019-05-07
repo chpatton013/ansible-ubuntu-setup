@@ -1,7 +1,7 @@
 ---
 bazel_version: 0.24.1
 bazel_release: "{{ bazel_version }}"
-bazel_root: "{{ dependency_directory }}/bazel/{{ bazel_version }}"
+bazel_root: "{{ setup_directory }}/bazel/{{ bazel_version }}"
 _bazel_installer_basename: "bazel-{{ bazel_version }}-installer-linux-x86_64.sh"
 bazel_installer: "{{ bazel_root }}/{{ _bazel_installer_basename }}"
 bazel_installer_url: "https://github.com/bazelbuild/bazel/releases/download/{{ bazel_release }}/{{ _bazel_installer_basename }}"

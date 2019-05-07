@@ -7,10 +7,10 @@
 - name: Download RustUp installer
   get_url:
     url: https://sh.rustup.rs
-    dest: "{{ dependency_directory }}/rustup.sh"
+    dest: "{{ setup_directory }}/rustup.sh"
     mode: 0550
 - name: Install RustUp
-  command: "{{ dependency_directory }}/rustup.sh --no-modify-path -y"
+  command: "{{ setup_directory }}/rustup.sh --no-modify-path -y"
   args:
     creates:
     - "{{ cargo_home }}"

@@ -1,7 +1,7 @@
 ---
 tmux_version: 2.8
 tmux_release: "{{ tmux_version }}"
-_tmux_root: "{{ dependency_directory }}/tmux/{{ tmux_version }}"
+_tmux_root: "{{ setup_directory }}/tmux/{{ tmux_version }}"
 tmux_source_root: "{{ _tmux_root }}/source"
 tmux_build_root: "{{ _tmux_root }}/build"
 tmux_install_root: "{{ _tmux_root }}/install"
@@ -10,4 +10,4 @@ tmux_install_root: "{{ _tmux_root }}/install"
 # A new release has been requested in the following issue:
 #   https://github.com/tmux-plugins/tpm/issues/156
 tpm_version: 26d9ace
-tpm_root: "{{ dependency_directory }}/tpm/{{ tpm_version }}"
+tpm_root: "{{ setup_directory }}/tpm/{{ tpm_version }}"

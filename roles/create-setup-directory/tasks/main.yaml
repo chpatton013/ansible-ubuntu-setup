@@ -1,0 +1,5 @@
+---
+- name: Create setup dependency directory
+  file:
+    path: "{{ setup_directory }}"
+    state: directory

@@ -1,4 +1,4 @@
 ---
 slack_version: 3.3.8
 slack_deb_basename: slack-desktop-{{ slack_version }}-amd64.deb
-slack_deb_path: "{{ dependency_directory }}/{{ slack_deb_basename }}"
+slack_deb_path: "{{ setup_directory }}/{{ slack_deb_basename }}"
