@@ -3,3 +3,5 @@ dependencies:
 - role: create-environment-directory
 - role: install-build-dependencies
 - role: install-git
+- role: install-python
+- role: install-ruby
