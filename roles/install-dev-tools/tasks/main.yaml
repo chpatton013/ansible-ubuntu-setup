@@ -28,6 +28,8 @@
     user_install: yes
     name: "{{ packages }}"
     state: present
+  environment:
+    GEM_HOME: "{{ gem_home }}"
   vars:
     packages:
     - rails

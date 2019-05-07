@@ -53,3 +53,5 @@
     user_install: yes
     name: neovim
     state: present
+  environment:
+    GEM_HOME: "{{ gem_home }}"

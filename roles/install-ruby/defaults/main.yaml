@@ -11,3 +11,5 @@ ruby_version: 2.6.2
 ruby_root_directory: "{{ rbenv_versions_root }}/{{ ruby_version }}"
 ruby_bin_directory: "{{ ruby_root_directory }}/bin"
 ruby_lib_directory: "{{ ruby_root_directory }}/lib"
+
+gem_home: "{{ dependency_directory }}/gems"

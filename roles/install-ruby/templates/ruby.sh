@@ -9,3 +9,6 @@ export RUBY_VERSION="{{ ruby_version }}"
 export RUBY_ROOT_DIRECTORY="{{ ruby_root_directory }}"
 export RUBY_BIN_DIRECTORY="{{ ruby_bin_directory }}"
 export RUBY_LIB_DIRECTORY="{{ ruby_lib_directory }}"
+
+export GEM_HOME="{{ gem_home }}"
+export GEM_PATH="$GEM_HOME"
