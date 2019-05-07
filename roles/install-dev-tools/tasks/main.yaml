@@ -54,5 +54,6 @@
     CARGO_HOME: "{{ cargo_home }}"
   vars:
     packages:
-    - rg
+    - alacritty
     - fd
+    - rg
