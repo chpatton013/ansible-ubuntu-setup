@@ -1,5 +1,0 @@
----
-- name: Create completions directory
-  file:
-    path: "{{ completions_directory }}"
-    state: directory

@@ -1,0 +1,5 @@
+---
+- name: Create dotfiles data directory
+  file:
+    path: "{{ data_directory }}"
+    state: directory

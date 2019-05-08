@@ -1,2 +1,0 @@
----
-completions_directory: "{{ ansible_user_dir }}/completions"

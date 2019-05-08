@@ -33,11 +33,11 @@
 - name: Create bash completion rules
   shell: >
     {{ cargo_home }}/bin/rustup completions bash > \
-      {{ completions_directory }}/rustup.bash
+      {{ completion_directory }}/rustup.bash
 - name: Create zsh completion rules
   shell: >
     {{ cargo_home }}/bin/rustup completions zsh > \
-      {{ completions_directory }}/rustup.zsh
+      {{ completion_directory }}/rustup.zsh
 - name: Create Rust environment file
   template:
     src: rust.sh

@@ -1,2 +1,2 @@
 ---
-setup_directory: "{{ ansible_user_dir }}/.local/share/dotfiles-setup"
+setup_directory: "{{ data_directory }}/setup"

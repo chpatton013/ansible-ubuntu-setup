@@ -1,2 +1,2 @@
 ---
-environment_directory: "{{ ansible_user_dir }}/environment"
+environment_directory: "{{ data_directory }}/environment"
