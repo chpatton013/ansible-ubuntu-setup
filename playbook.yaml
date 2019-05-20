@@ -22,4 +22,4 @@
   - install-zsh
   # This takes 30 minutes even after it has already completed successfully. Need
   # to get this to finish quickly before reintroducing it.
-  # - install-gcc
+  - install-gcc
